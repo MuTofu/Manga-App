@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MangaApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    <string name="placeholder"> The story of Arknights: Endfield is a space opera-themed adventure similar to Mass Effect that takes place on a new planet called Talos-II, a dangerous world rife with Catastrophes and risks. The planet's expansive wildlands and uninhabited areas stretched far beyond the colonies of the Habitable Band have yet to be discovered. Players will explore this untamed world with a team of Endfield Industries operators to unravel the mystery hidden within the abandoned ruins. Arknights: Endfield will have all-new gameplay mechanics and contents, which allows the players to control a party of selected operators as they explore Talos-II, complete missions, unlock new story chapters, and take on engaging challenges. As for combat, there will be a real-time strategic system, where the player can operate multiple operators simultaneously, and as the story progresses, the player’s party will encounter various factions and enemies that will offer an epic experience with varying tactics</string>-->
+    <string name="sinopsis">The story of Arknights: Endfield is a space opera-themed adventure similar to Mass Effect
+        that takes place on a new planet called Talos-II, a dangerous world rife with Catastrophes and risks. The
+        planets expansive wildlands and uninhabited areas stretched far beyond the colonies of the Habitable Band have
+        yet to be discovered. Players will explore this untamed world with a team of Endfield Industries operators to
+        unravel the mystery hidden within the abandoned ruins.
+    </string>
+    <string name="search_hint">Title</string>
+</resources>
