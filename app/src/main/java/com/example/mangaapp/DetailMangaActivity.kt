@@ -2,51 +2,108 @@ package com.example.mangaapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.mangaapp.adapter.DetailChapterAdapter
-import com.example.mangaapp.datamodel.detail.DetailMangaDummyData
+import com.example.mangaapp.apiservice.RetrofitInstance
+import com.example.mangaapp.datamodel.detail.DetailData
+import retrofit2.HttpException
+import java.io.IOException
 
-class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecyclerListener {
+class DetailMangaActivity : AppCompatActivity() {
+
+    private lateinit var myAdapter : DetailChapterAdapter
+
+    private lateinit var dataKu : DetailData
+
+    private val TAG = "DetailMangaActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_manga)
+        
+        val mangaId = intent.getStringExtra("mangaId")
+        val mangaDesc = intent.getStringExtra("mangaDescription")
+        val pgrBar = findViewById<ProgressBar>(R.id.pgrBarDetail)
+        val layout = findViewById<RelativeLayout>(R.id.layoutDetail)
 
-        val mangaTitle = intent.getStringExtra("mangaTitle")
-        val mangaImg = intent.getStringExtra("mangaImage")
+        setupRecycleView()
 
-        val titleDetail = findViewById<TextView>(R.id.detailJudul)
-        val imageDetail : ImageView = findViewById(R.id.detailImage)
+        lifecycleScope.launchWhenCreated {
+            layout.isVisible = false
+            pgrBar.isVisible = true
 
-        titleDetail.text = mangaTitle
-        imageDetail.load(mangaImg)
+            val respon = try {
 
-        val dataChapter = arrayOf("chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7")
-        val dataRelease = arrayOf("01-09-2024","02-09-2024","03-09-2024","05-09-2024","11-09-2024", "21-09-2024","12-09-2024")
+                RetrofitInstance.api.getDetailManga("${mangaId}")
 
-        val data = ArrayList<DetailMangaDummyData>()
+            } catch (e: IOException) {
+                Log.e(TAG, "IOException: ${e.message}", )
+                pgrBar.isVisible = false
+                return@launchWhenCreated
+            } catch (e : HttpException) {
+                Log.e(TAG, "HttpException: ${e.message}", )
+                pgrBar.isVisible = false
+                return@launchWhenCreated
+            }
 
-        for (i in 0 until dataChapter.size) {
-            data.add(
-                DetailMangaDummyData(
-                    dataChapter[i],
-                    dataRelease[i],
-                )
-            )
+            if(respon.isSuccessful && respon.body() != null) {
+                dataKu = respon.body()!!
+
+                Log.e(TAG, "data: ${dataKu.toString()}", )
+                myAdapter.list = dataKu.chapterList
+
+                Log.e(TAG, "Success", )
+            } else {
+//                dataKu = respon.body()!!
+                Log.e(TAG, "Respon Error", )
+            }
+
+            pgrBar.isVisible = false
+
+            val title = findViewById<TextView>(R.id.detailJudul)
+            val totalChapter = findViewById<TextView>(R.id.detailTotalCh)
+            val imagePoster = findViewById<ImageView>(R.id.detailImage)
+            val deskripsi = findViewById<TextView>(R.id.detailDesc)
+
+            title.text = dataKu.name
+            totalChapter.text = "Total Chapter: ${dataKu.chapterList.size}"
+            imagePoster.load(dataKu.imageUrl)
+            deskripsi.text = mangaDesc
+
+            layout.isVisible = true
+
         }
 
-        val recyclerChapter = findViewById<RecyclerView>(R.id.recycleView_DetailManga)
-        val myadapter = DetailChapterAdapter(data, this)
-        val recycler : RecyclerView = recyclerChapter
-        recycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, true)
-        recycler.adapter = myadapter
+
+
+
+
+
+
 
     }
 
-    override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+    private fun setupRecycleView() {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycleView_DetailManga)
+
+        recyclerView.apply {
+            myAdapter = DetailChapterAdapter()
+            adapter = myAdapter
+            layoutManager = LinearLayoutManager(this@DetailMangaActivity, RecyclerView.VERTICAL, false)
+        }
     }
+
+//    override fun onItemClick(position: Int) {
+//        TODO("Not yet implemented")
+//    }
 }

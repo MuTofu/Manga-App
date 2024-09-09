@@ -4,63 +4,54 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mangaapp.datamodel.detail.DetailMangaDummyData
 import com.example.mangaapp.R
+import com.example.mangaapp.datamodel.detail.Chapter
 
-class DetailChapterAdapter(private val data: ArrayList<DetailMangaDummyData>, private val listener : RecyclerListener) : RecyclerView.Adapter<DetailChapterAdapter.ViewHolder>() {
+class DetailChapterAdapter : RecyclerView.Adapter<DetailChapterAdapter.ChapterViewHolder>() {
 
+    inner class ChapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val titleChapter = itemView.findViewById<TextView>(R.id.chapterEps)
+        val chapterUpdate = itemView.findViewById<TextView>(R.id.releaseCh)
 
-        inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    }
 
-        val chapter : TextView
-        val release : TextView
-
-        init {
-            chapter = view.findViewById(R.id.chapterEps)
-            release = view.findViewById(R.id.releaseCh)
+    private val diffCallback = object : DiffUtil.ItemCallback<Chapter>() {
+        override fun areItemsTheSame(oldItem: Chapter, newItem: Chapter): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun onClick(p0: View?) {
-            TODO("Not yet implemented")
+        override fun areContentsTheSame(oldItem: Chapter, newItem: Chapter): Boolean {
+            return oldItem == newItem
         }
 
     }
-//
-//    override fun onCreateViewHolder(grupView: ViewGroup, tipeView: Int): HomeAdapter.ViewHolder {
-//        val view = LayoutInflater.from(grupView.context).inflate(R.layout.fetch_chapter, grupView, false)
-//        return ViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(viewHolder: HomeAdapter.ViewHolder, posisi: Int) {
-//        var item = data[posisi]
-//        viewHolder.textView.text = item.chapter
-//        viewHolder.textView.text = item.chapter
-//    }
-//
-//
-//    override fun getItemCount(): Int {
-//        return data.size
-//    }
 
-    interface RecyclerListener {
-        fun onItemClick(position: Int)
-    }
+    val differ = AsyncListDiffer(this, diffCallback)
+    var list : List<Chapter>
+        get() = differ.currentList
+        set(value) = differ.submitList(value)
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.fetch_chapter, viewGroup, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(viewHolder: ViewHolder, posisi: Int) {
-        var item = data[posisi]
-        viewHolder.chapter.text = item.chapter
-        viewHolder.release.text = item.rilis
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fetch_chapter, parent, false)
+        return ChapterViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return list.size
     }
+
+    override fun onBindViewHolder(holder: ChapterViewHolder, position: Int) {
+        holder.apply {
+            val manga = list[position]
+            holder.titleChapter.text = manga.name
+            holder.chapterUpdate.text = manga.createdAt
+        }
+    }
+
 
 
 }

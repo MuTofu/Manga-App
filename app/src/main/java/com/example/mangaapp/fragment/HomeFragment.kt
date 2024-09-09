@@ -97,9 +97,8 @@ class HomeFragment : Fragment(), HomeAdapter.RecycleEvent {
     override fun onItemClick(position: Int) {
         var manga = data.mangaList[position]
         val intent = Intent(context, DetailMangaActivity::class.java)
-        intent.putExtra("mangaTitle", manga.title)
-        intent.putExtra("mangaImage", manga.image)
-        intent.putExtra("mangaId", manga.description)
+        intent.putExtra("mangaId", manga.id)
+        intent.putExtra("mangaDescription", manga.description)
         startActivity(intent)
     }
 
