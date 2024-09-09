@@ -1,4 +1,4 @@
-package com.example.mangaapp
+package com.example.mangaapp.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mangaapp.DetailMangaActivity
+import com.example.mangaapp.datamodel.HomeDummyData
+import com.example.mangaapp.R
+import com.example.mangaapp.adapter.SearchResultAdapter
 
 class SearchFragment : Fragment(), SearchResultAdapter.RecyclerViewEvent {
-    lateinit var homedata : ArrayList<HomeData>
+    lateinit var homedata : ArrayList<HomeDummyData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,14 +24,14 @@ class SearchFragment : Fragment(), SearchResultAdapter.RecyclerViewEvent {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_search, container, false)
 
-        homedata = ArrayList<HomeData>()
+        homedata = ArrayList<HomeDummyData>()
 
         val dataset = arrayOf("Majo no Tabi tabi", "Arknight : Endfield", "Attack on titan", "Marbel")
         val dataImg = arrayOf(R.drawable.card1, R.drawable.card2, R.drawable.card1, R.drawable.card2)
 
         for (i in 0 until dataset.size) {
             homedata.add(
-                HomeData(
+                HomeDummyData(
                     dataImg[i],
                     dataset[i])
             )

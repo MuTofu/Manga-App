@@ -1,12 +1,14 @@
-package com.example.mangaapp
+package com.example.mangaapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mangaapp.datamodel.detail.DetailMangaDummyData
+import com.example.mangaapp.R
 
-class DetailChapterAdapter(private val data: ArrayList<DetailMangaData>, private val listener : RecyclerListener) : RecyclerView.Adapter<DetailChapterAdapter.ViewHolder>() {
+class DetailChapterAdapter(private val data: ArrayList<DetailMangaDummyData>, private val listener : RecyclerListener) : RecyclerView.Adapter<DetailChapterAdapter.ViewHolder>() {
 
 
         inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -45,7 +47,7 @@ class DetailChapterAdapter(private val data: ArrayList<DetailMangaData>, private
         fun onItemClick(position: Int)
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DetailChapterAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.fetch_chapter, viewGroup, false)
         return ViewHolder(view)
     }

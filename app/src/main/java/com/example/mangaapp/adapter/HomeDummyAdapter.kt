@@ -1,4 +1,4 @@
-package com.example.mangaapp
+package com.example.mangaapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mangaapp.datamodel.HomeDummyData
+import com.example.mangaapp.R
 
-class HomeAdapter(private val dataset: ArrayList<HomeData>, private val myListener : RecyclerViewEvent) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeDummyAdapter(private val dataset: ArrayList<HomeDummyData>, private val myListener : RecyclerViewEvent) : RecyclerView.Adapter<HomeDummyAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val textView: TextView

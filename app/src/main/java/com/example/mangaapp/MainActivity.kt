@@ -6,14 +6,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
+import com.example.mangaapp.fragment.BrowseFragment
+import com.example.mangaapp.fragment.HomeFragment
+import com.example.mangaapp.fragment.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            if (fragmenLayout !is SearchFragment ) {
+            if (fragmenLayout !is SearchFragment) {
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
                     replace(R.id.MainFragment, SearchFragment(), "myFragment")

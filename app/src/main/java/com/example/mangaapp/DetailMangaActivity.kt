@@ -6,6 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.example.mangaapp.adapter.DetailChapterAdapter
+import com.example.mangaapp.datamodel.detail.DetailMangaDummyData
 
 class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecyclerListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,22 +16,22 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecyclerLi
         setContentView(R.layout.activity_detail_manga)
 
         val mangaTitle = intent.getStringExtra("mangaTitle")
-        val mangaImg = intent.getIntExtra("mangaImage",0)
+        val mangaImg = intent.getStringExtra("mangaImage")
 
         val titleDetail = findViewById<TextView>(R.id.detailJudul)
         val imageDetail : ImageView = findViewById(R.id.detailImage)
 
         titleDetail.text = mangaTitle
-        imageDetail.setImageResource(mangaImg)
+        imageDetail.load(mangaImg)
 
         val dataChapter = arrayOf("chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7")
         val dataRelease = arrayOf("01-09-2024","02-09-2024","03-09-2024","05-09-2024","11-09-2024", "21-09-2024","12-09-2024")
 
-        val data = ArrayList<DetailMangaData>()
+        val data = ArrayList<DetailMangaDummyData>()
 
         for (i in 0 until dataChapter.size) {
             data.add(
-                DetailMangaData(
+                DetailMangaDummyData(
                     dataChapter[i],
                     dataRelease[i],
                 )

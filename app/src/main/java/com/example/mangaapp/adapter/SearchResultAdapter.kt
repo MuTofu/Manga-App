@@ -1,4 +1,4 @@
-package com.example.mangaapp
+package com.example.mangaapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mangaapp.datamodel.HomeDummyData
+import com.example.mangaapp.R
 
-class SearchResultAdapter(private val data : ArrayList<HomeData>, private val listener : RecyclerViewEvent) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(private val data : ArrayList<HomeDummyData>, private val listener : RecyclerViewEvent) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
     interface RecyclerViewEvent {
         fun onItemClicked(position : Int)
@@ -33,7 +35,7 @@ class SearchResultAdapter(private val data : ArrayList<HomeData>, private val li
 
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SearchResultAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.fetch_manga, viewGroup, false)
         return ViewHolder(view)
     }
