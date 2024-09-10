@@ -12,7 +12,7 @@ import coil.load
 import com.example.mangaapp.R
 import com.example.mangaapp.datamodel.list.Manga
 
-class HomeAdapter(private val listener : RecycleEvent) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeCompletedAdapter(private val listener : RecycleEvent) : RecyclerView.Adapter<HomeCompletedAdapter.HomeViewHolder>() {
 
     inner class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val title = itemView.findViewById<TextView>(R.id.fetch_title_manga)
@@ -24,7 +24,7 @@ class HomeAdapter(private val listener : RecycleEvent) : RecyclerView.Adapter<Ho
         override fun onClick(v: View?) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                listener.onItemClick(position)
+                listener.onItemCompletedClick(position)
             }
         }
 
@@ -62,6 +62,6 @@ class HomeAdapter(private val listener : RecycleEvent) : RecyclerView.Adapter<Ho
     }
 
     interface RecycleEvent{
-        fun onItemClick(position: Int)
+        fun onItemCompletedClick(position: Int)
     }
 }

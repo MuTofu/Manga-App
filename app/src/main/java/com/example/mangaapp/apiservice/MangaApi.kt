@@ -5,14 +5,20 @@ import com.example.mangaapp.datamodel.list.MangaData
 import retrofit2.http.GET
 import retrofit2.Response
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MangaApi {
 
     @GET("/api/mangaList")
-    suspend fun getMangaList() : Response<MangaData>
+    suspend fun getMangaList(@Query("state")  state : String) : Response<MangaData>
+
+    @GET("/api/mangaList")
+    suspend fun getMangaListType() : Response<MangaData>
 
     @GET("/api/manga/{id}")
     suspend fun getDetailManga(@Path("id") id : String) : Response<DetailData>
+
+
 
 
 }
