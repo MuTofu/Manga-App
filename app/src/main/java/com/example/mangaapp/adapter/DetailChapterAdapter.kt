@@ -11,11 +11,22 @@ import com.example.mangaapp.datamodel.detail.DetailMangaDummyData
 import com.example.mangaapp.R
 import com.example.mangaapp.datamodel.detail.Chapter
 
-class DetailChapterAdapter : RecyclerView.Adapter<DetailChapterAdapter.ChapterViewHolder>() {
+class DetailChapterAdapter(private val listener : RecycleEvent) : RecyclerView.Adapter<DetailChapterAdapter.ChapterViewHolder>() {
 
-    inner class ChapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ChapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val titleChapter = itemView.findViewById<TextView>(R.id.chapterEps)
         val chapterUpdate = itemView.findViewById<TextView>(R.id.releaseCh)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
 
     }
 
@@ -52,6 +63,9 @@ class DetailChapterAdapter : RecyclerView.Adapter<DetailChapterAdapter.ChapterVi
         }
     }
 
+    interface RecycleEvent {
+        fun onItemClick(position : Int)
+    }
 
 
 }

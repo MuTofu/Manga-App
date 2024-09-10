@@ -1,5 +1,6 @@
 package com.example.mangaapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,11 +20,11 @@ import com.example.mangaapp.datamodel.detail.DetailData
 import retrofit2.HttpException
 import java.io.IOException
 
-class DetailMangaActivity : AppCompatActivity() {
+class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEvent {
 
     private lateinit var myAdapter : DetailChapterAdapter
-
     private lateinit var dataKu : DetailData
+    private lateinit var mangaId : String
 
     private val TAG = "DetailMangaActivity"
 
@@ -31,7 +32,7 @@ class DetailMangaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_manga)
         
-        val mangaId = intent.getStringExtra("mangaId")
+        mangaId = intent.getStringExtra("mangaId")!!
         val mangaDesc = intent.getStringExtra("mangaDescription")
         val pgrBar = findViewById<ProgressBar>(R.id.pgrBarDetail)
         val layout = findViewById<RelativeLayout>(R.id.layoutDetail)
@@ -97,13 +98,19 @@ class DetailMangaActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycleView_DetailManga)
 
         recyclerView.apply {
-            myAdapter = DetailChapterAdapter()
+            myAdapter = DetailChapterAdapter(this@DetailMangaActivity)
             adapter = myAdapter
             layoutManager = LinearLayoutManager(this@DetailMangaActivity, RecyclerView.VERTICAL, false)
         }
     }
 
-//    override fun onItemClick(position: Int) {
-//        TODO("Not yet implemented")
-//    }
+    override fun onItemClick(position: Int) {
+        val chapter  = dataKu.chapterList[position]
+        val idManga = mangaId
+        val position = position
+        val intent = Intent(this, ReadActivity::class.java)
+        intent.putExtra("ChapterId", chapter.id)
+        intent.putExtra("MangaId", idManga)
+        startActivity(intent)
+    }
 }

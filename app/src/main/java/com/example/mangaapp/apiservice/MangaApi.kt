@@ -1,5 +1,6 @@
 package com.example.mangaapp.apiservice
 
+import com.example.mangaapp.datamodel.chapter.ChapterData
 import com.example.mangaapp.datamodel.detail.DetailData
 import com.example.mangaapp.datamodel.list.MangaData
 import retrofit2.http.GET
@@ -17,6 +18,9 @@ interface MangaApi {
 
     @GET("/api/manga/{id}")
     suspend fun getDetailManga(@Path("id") id : String) : Response<DetailData>
+
+    @GET("/api/manga/{mangaId}/{chapterId}")
+    suspend fun getChapter(@Path("mangaId") mangaId: String, @Path("chapterId") chapterId: String) : Response<ChapterData>
 
 
 
