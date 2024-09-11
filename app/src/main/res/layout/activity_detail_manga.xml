@@ -86,6 +86,7 @@
                             android:layout_height="wrap_content"
                             android:text="Start - CH 0"
                             android:background="@drawable/btn_playgreen"
+                            android:id="@+id/btnStartCh"
                             android:textAllCaps="false"/>
 
                     <ImageButton

@@ -3,6 +3,7 @@ package com.example.mangaapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +14,7 @@ import com.example.mangaapp.datamodel.chapter.Image
 
 class ReadPageAdapter : RecyclerView.Adapter<ReadPageAdapter.ReadViewHolder>()  {
     inner class ReadViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val pageImage = itemView.findViewById<ImageView>(R.id.imgPage)
+        val pageImage = itemView.findViewById<ImageButton>(R.id.imgPage)
     }
 
     private val diffCallback = object : DiffUtil.ItemCallback<Image>() {

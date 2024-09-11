@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -85,6 +86,21 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEve
 
         }
 
+        val btnStart = findViewById<Button>(R.id.btnStartCh)
+
+        btnStart.setOnClickListener {
+            val firstCh = dataKu.chapterList.size
+            val chapter  = dataKu.chapterList[firstCh - 1]
+            Log.e(TAG, "onCreate: $chapter", )
+            val idManga = mangaId
+            val position = dataKu.chapterList.size - 1
+            val intent = Intent(this, ReadActivity::class.java)
+            intent.putExtra("ChapterId", chapter.id)
+            intent.putExtra("MangaId", idManga)
+            intent.putExtra("position",position)
+            startActivity(intent)
+        }
+
 
 
 
@@ -111,6 +127,7 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEve
         val intent = Intent(this, ReadActivity::class.java)
         intent.putExtra("ChapterId", chapter.id)
         intent.putExtra("MangaId", idManga)
+        intent.putExtra("position",position)
         startActivity(intent)
     }
 }
