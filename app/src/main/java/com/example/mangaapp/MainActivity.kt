@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -19,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     var fragLogic : Fragment? = null
+
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -78,6 +80,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
+
+
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -97,6 +103,11 @@ class MainActivity : AppCompatActivity() {
                     setReorderingAllowed(true)
                     replace(R.id.MainFragment, SearchFragment(), "myFragment")
                     addToBackStack(null)
+                }
+            } else if (fragmenLayout is SearchFragment) {
+                supportFragmentManager.commit {
+                    remove(fragmenLayout)
+                    replace(R.id.MainFragment, SearchFragment(), "myFragment")
                 }
             }
 

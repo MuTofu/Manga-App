@@ -22,6 +22,9 @@ interface MangaApi {
     @GET("/api/manga/{mangaId}/{chapterId}")
     suspend fun getChapter(@Path("mangaId") mangaId: String, @Path("chapterId") chapterId: String) : Response<ChapterData>
 
+    @GET("api/mangaList")
+    suspend fun getMangaPage(@Query("page") page: Int) : Response<MangaData>
+
 
 
 

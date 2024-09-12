@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".fragment.BrowseFragment">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+                tools:context=".fragment.BrowseFragment">
+    <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:id="@+id/pgrBarBrowser"/>
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:elevation="0dp"
+            android:id="@+id/appBar">
+
+        <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbar"
+                android:background="@android:color/transparent"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
+            android:id="@+id/layoutBrowser"
+            android:layout_below="@+id/appBar"
             android:layout_height="match_parent">
 
         <LinearLayout
@@ -18,8 +42,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/recycleView_Browser"
-                    android:layout_gravity="center"
-                    tools:listitem="@layout/fetch_manga"/>
+                    android:layout_gravity="center"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginVertical="30dp"
+                    android:orientation="horizontal">
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_back"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/btnPageBack"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/currentPage"
+                        android:layout_marginHorizontal="50dp"/>
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_forward"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/btnPageForward"/>
+
+
+
+            </LinearLayout>
 
 
 
