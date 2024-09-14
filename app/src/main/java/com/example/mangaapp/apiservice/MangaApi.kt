@@ -25,6 +25,9 @@ interface MangaApi {
     @GET("api/mangaList")
     suspend fun getMangaPage(@Query("page") page: Int) : Response<MangaData>
 
+    @GET("api/search/{querySearch}")
+    suspend fun searchManga(@Path("querySearch") querySearch: String, @Query("page") page : Int) : Response<MangaData>
+
 
 
 

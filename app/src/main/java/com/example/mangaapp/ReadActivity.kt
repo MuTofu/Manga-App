@@ -1,5 +1,6 @@
 package com.example.mangaapp
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,6 +30,9 @@ class ReadActivity : AppCompatActivity() {
     private lateinit var chapterList : List<ChapterIds>
 
     private lateinit var myAdapter: ReadPageAdapter
+    private var lastChapterId = ""
+    private var lastChapterTitle = ""
+    private var lastPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,14 +51,33 @@ class ReadActivity : AppCompatActivity() {
 
 
             if (positionNow != 0) {
-                val chapter  = chapterList[positionNow - 1].id
+                var chapter  = chapterList[positionNow - 1].id
                 Log.e(TAG + "chId 1", "onCreate: $chapterId", )
                 Log.e(TAG + "chId 2", "onCreate: $chapter", )
-                val idManga = mangaId
+
+                var idManga = mangaId
                 apiCall(idManga, chapter)
                 positionNow = positionNow - 1
+                chapterId = chapter
             } else {
                 Toast.makeText(this, "Wait for Update!", Toast.LENGTH_LONG).show()
+            }
+
+            lastPosition = positionNow
+            lastChapterId = chapterId
+            lastChapterTitle = chapterList[positionNow].name
+
+
+            openFileOutput("lastReadCh.txt", Context.MODE_PRIVATE).use { fileOut ->
+                fileOut?.write(lastChapterTitle.toByteArray())
+            }
+
+            openFileOutput("lastReadChId.txt", Context.MODE_PRIVATE).use { fileOut ->
+                fileOut?.write(lastChapterId.toByteArray())
+            }
+
+            openFileOutput("lastReadPosition.txt", Context.MODE_PRIVATE).use { fileOut ->
+                fileOut?.write(lastPosition.toString().toByteArray())
             }
             
 
@@ -64,45 +87,6 @@ class ReadActivity : AppCompatActivity() {
         }
 
 
-
-
-
-//        setupRecyclerView()
-//
-//        lifecycleScope.launchWhenCreated {
-//            pgrBar.isVisible = true
-//            layout.isVisible = false
-//
-//            val respon = try {
-//
-//                RetrofitInstance.api.getChapter(mangaId, chapterId)
-//
-//            } catch (e: IOException) {
-//                Log.e(TAG, "IOException: ${e.message}", )
-//                pgrBar.isVisible = false
-//                return@launchWhenCreated
-//            }catch (e : HttpException){
-//                Log.e(TAG, "HttpException: ${e.message}", )
-//                pgrBar.isVisible = false
-//                return@launchWhenCreated
-//            }
-//
-//            if (respon.isSuccessful && respon.body() != null){
-//                val data = respon.body()!!
-//
-//                chapterList = data.chapterListIds
-//                myAdapter.list = data.images
-//
-//                Log.e(TAG, "Succsess", )
-//            } else {
-//                Log.e(TAG, "Respon Error", )
-//            }
-//            pgrBar.isVisible = false
-//            layout.isVisible = true
-//            Log.e(TAG, "onCreate: $chapterId")
-//            Log.e(TAG, "onCreate: $mangaId")
-//
-//        }
 
 
 

@@ -5,8 +5,18 @@
              android:layout_height="match_parent"
              tools:context=".fragment.SearchFragment">
 
+    <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/pgrBarSearch"
+            android:visibility="gone"/>
+
+
+
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
+            android:id="@+id/layoutSearch"
             android:layout_height="match_parent">
 
         <LinearLayout
@@ -17,8 +27,42 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/fetch_manga"
                     android:id="@+id/recyclerView_Search"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginVertical="30dp"
+                    android:orientation="horizontal">
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_back"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/btnSearchPageBack"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/currentSearchPage"
+                        android:layout_marginHorizontal="50dp"/>
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_forward"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/btnSearchPageForward"/>
+
+
+
+            </LinearLayout>
 
         </LinearLayout>
 

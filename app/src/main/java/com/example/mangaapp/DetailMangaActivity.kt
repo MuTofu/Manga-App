@@ -1,5 +1,6 @@
 package com.example.mangaapp
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,16 +28,27 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEve
     private lateinit var dataKu : DetailData
     private lateinit var mangaId : String
 
+    private var lastReadId = ""
+    private var lastChapterId = ""
+    private var lastReadTitle = ""
+    private var lastChapterTitle = ""
+    private var lastImg = ""
+    private var lastPosition = 0
+
+
     private val TAG = "DetailMangaActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_manga)
+
+
         
         mangaId = intent.getStringExtra("mangaId")!!
         val mangaDesc = intent.getStringExtra("mangaDescription")
         val pgrBar = findViewById<ProgressBar>(R.id.pgrBarDetail)
         val layout = findViewById<RelativeLayout>(R.id.layoutDetail)
+
 
         setupRecycleView()
 
@@ -88,6 +100,8 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEve
 
         val btnStart = findViewById<Button>(R.id.btnStartCh)
 
+
+
         btnStart.setOnClickListener {
             val firstCh = dataKu.chapterList.size
             val chapter  = dataKu.chapterList[firstCh - 1]
@@ -95,15 +109,23 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEve
             val idManga = mangaId
             val position = dataKu.chapterList.size - 1
             val intent = Intent(this, ReadActivity::class.java)
+
+            lastReadId = idManga
+            lastChapterId = dataKu.chapterList[position].id
+            lastReadTitle = dataKu.name
+            lastChapterTitle = dataKu.chapterList[position].name
+            lastImg = dataKu.imageUrl
+            lastPosition = position
+
+            writeLastManga()
+
+
+
             intent.putExtra("ChapterId", chapter.id)
             intent.putExtra("MangaId", idManga)
             intent.putExtra("position",position)
             startActivity(intent)
         }
-
-
-
-
 
 
 
@@ -114,6 +136,7 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEve
         val recyclerView = findViewById<RecyclerView>(R.id.recycleView_DetailManga)
 
         recyclerView.apply {
+
             myAdapter = DetailChapterAdapter(this@DetailMangaActivity)
             adapter = myAdapter
             layoutManager = LinearLayoutManager(this@DetailMangaActivity, RecyclerView.VERTICAL, false)
@@ -125,9 +148,45 @@ class DetailMangaActivity : AppCompatActivity(), DetailChapterAdapter.RecycleEve
         val idManga = mangaId
         val position = position
         val intent = Intent(this, ReadActivity::class.java)
+
+        lastReadId = idManga
+        lastChapterId = dataKu.chapterList[position].id
+        lastReadTitle = dataKu.name
+        lastChapterTitle = dataKu.chapterList[position].name
+        lastImg = dataKu.imageUrl
+        lastPosition = position
+
+        writeLastManga()
+
+
+
+
         intent.putExtra("ChapterId", chapter.id)
         intent.putExtra("MangaId", idManga)
         intent.putExtra("position",position)
         startActivity(intent)
+    }
+
+    private fun writeLastManga() {
+        openFileOutput("lastReadId.txt", Context.MODE_PRIVATE).use { fileOut ->
+            fileOut?.write(lastReadId.toByteArray())
+        }
+        openFileOutput("lastReadTitle.txt", Context.MODE_PRIVATE).use { fileOut ->
+            fileOut?.write(lastReadTitle.toByteArray())
+        }
+        openFileOutput("lastReadImg.txt", Context.MODE_PRIVATE).use { fileOut ->
+            fileOut?.write(lastImg.toByteArray())
+        }
+        openFileOutput("lastReadCh.txt", Context.MODE_PRIVATE).use { fileOut ->
+            fileOut?.write(lastChapterTitle.toByteArray())
+        }
+
+        openFileOutput("lastReadChId.txt", Context.MODE_PRIVATE).use { fileOut ->
+            fileOut?.write(lastChapterId.toByteArray())
+        }
+
+        openFileOutput("lastReadPosition.txt", Context.MODE_PRIVATE).use { fileOut ->
+            fileOut?.write(lastPosition.toString().toByteArray())
+        }
     }
 }

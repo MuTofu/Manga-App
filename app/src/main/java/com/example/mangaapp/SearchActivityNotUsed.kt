@@ -47,20 +47,20 @@ class SearchActivityNotUsed : AppCompatActivity(), SearchResultAdapter.RecyclerV
             )
         }
 
-        recyclerViewInput(data)
+//        recyclerViewInput(data)
 
 
 
 
     }
-
-    fun recyclerViewInput(data : ArrayList<HomeDummyData>){
-        val recycle : RecyclerView = findViewById(R.id.recycleView_SearchResult)
-        val adapter = SearchResultAdapter(data, this)
-        recycle.layoutManager = GridLayoutManager(this, 3)
-        recycle.adapter = adapter
-
-    }
+//
+//    fun recyclerViewInput(data : ArrayList<HomeDummyData>){
+//        val recycle : RecyclerView = findViewById(R.id.recycleView_SearchResult)
+//        val adapter = SearchResultAdapter(data, this)
+//        recycle.layoutManager = GridLayoutManager(this, 3)
+//        recycle.adapter = adapter
+//
+//    }
 
     override fun onItemClicked(position: Int) {
         var manga = data[position]
